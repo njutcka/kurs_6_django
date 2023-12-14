@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="col-12 mb-5">
+    <a class="btn btn-outline-primary" href="{% url 'main:create_client' %}">Добавить клиента</a>
+</div>
+{% for object in object_list %}
+<div class="col-4">
+    <div class="card mb-4 box-shadow">
+        <div class="card-header">
+            <h4 class="my-0 font-weight-normal">{{object.name|title}}</h4>
+        </div>
+        <div class="card-body">
+            <h1 class="my-0 font-weight-normal">{{object.email}}</h1>
+            <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                <li>{{object.comment|truncatechars:100}}</li>
+            </ul>
+                    <a class="p-2 btn btn-outline-primary" href="{% url 'main:update_client' object.pk %}">Изменить</a>
+                    <a class="p-2 btn btn-outline-danger" href="{% url 'main:delete_client' object.pk %}">Удалить</a>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}

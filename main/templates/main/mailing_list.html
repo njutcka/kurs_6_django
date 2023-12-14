@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="col-12 mb-5">
+    <a class="btn btn-outline-primary" href="{% url 'main:create_mailing' %}">Добавить рассылку</a>
+</div>
+{% for object in object_list %}
+<div class="col-5">
+    <div class="card mb-4 box-shadow">
+        <div class="card-header">
+            <h4 class="my-0 font-weight-normal">{{object.title_mail|title}}</h4>
+        </div>
+        <div class="card-body">
+            <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                <li>{{object.period_mail}}</li>
+                <li>{{object.status_mail}}</li>
+            </ul>
+                    <a class="p-2 btn btn-outline-primary" href="{% url 'main:mailing_detail' object.pk %}">Детали</a>
+                    <a class="p-2 btn btn-outline-primary" href="{% url 'main:update_mailing' object.pk %}">Изменить</a>
+                    <a class="p-2 btn btn-outline-danger" href="{% url 'main:delete_mailing' object.pk %}">Удалить</a>
+
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}
