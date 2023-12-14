@@ -1,0 +1,17 @@
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <h5 class="my-0 mr-md-auto font-weight-normal">Skystore</h5>
+    <nav class="ms-5">
+        <a  href="{% url 'main:home' %}" class="p-2 btn btn-outline-primary" >Главная</a>
+        <a  class="p-2 btn btn-outline-primary" >Контакты</a>
+        <a class="p-2 btn btn-outline-primary" >Блог</a>
+
+        {% if user.is_authenticated %}
+            <a href="{% url 'users:profile' %}" class="p-2 btn btn-outline-primary" >Профиль</a>
+            <a href="{% url 'main:my_mailing' %}" class="p-2 btn btn-outline-primary" >Мои рассылки</a>
+            <a href="{% url 'users:logout' %}" class="p-2 btn btn-outline-primary" >Выйти</a>
+        {% else %}
+            <a href="{% url 'users:login' %}" class="p-2 btn btn-outline-primary" >Войти</a>
+            <a href="{% url 'users:register' %}" class="p-2 btn btn-outline-primary" >Регистрация</a>
+        {% endif %}
+    </nav>
+</div>
