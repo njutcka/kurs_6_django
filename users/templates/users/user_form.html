@@ -11,8 +11,11 @@
                     <div class="body m-3">
                             {% csrf_token %}
                             {{ form.as_p }}
-                            <a class="btn btn-secondary btn-sm" href="{% url 'users:generate_new_password' %}" >Восстановить пароль</a>
+                        {% if perms.user.set_is_activated %}
 
+                        {% else %}
+                            <a class="btn btn-secondary btn-sm" href="{% url 'users:generate_new_password' %}" >Восстановить пароль</a>
+                        {% endif %}
                     </div>
                     <div class="card-footer">
                         <button  type="submit" class="btn btn-success m-3">

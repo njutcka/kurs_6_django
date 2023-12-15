@@ -5,16 +5,64 @@
 <div class="container">
     <div class="row text-center">
         <div class="col-12 mb-5">
-            <a class="btn btn-outline-primary" href="{% url 'main:client_list' %}">Список клиентов</a>
+            <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal">Всего рассылок в сервисе</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">{{ mailings_count }}</h1>
+                    </div>
         </div>
 
     </div>
     <div class="row text-center">
         <div class="col-12 mb-5">
-            <a class="btn btn-outline-primary" href="{% url 'main:mailing_list' %}">Список рассылок</a>
+            <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal">Всего активных рассылок</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">{{ active_mailings_count }}</h1>
+                    </div>
         </div>
 
     </div>
+
+    <div class="row text-center">
+        <div class="col-12 mb-5">
+            <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal">Всего клиентов</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">{{ client_count }}</h1>
+                    </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        {% for blog in blog_list %}
+            <div class="col-6">
+                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col p-4 d-flex flex-column position-static">
+
+                        <h3 class="mb-0">{{ blog.title }}</h3>
+                        <div class="mb-1 text-muted">{{ blog.date_of_creation }}</div>
+                        <p class="card-text mb-auto">{{ blog.body }}</p>
+                        <a href="#" class="stretched-link">Читать далее</a>
+                    </div>
+                    <div class="col-auto d-none d-lg-block">
+                        <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img"
+                             aria-label="Placeholder: Blog" preserveAspectRatio="xMidYMid slice" focusable="false">
+                            <title>Placeholder</title>
+                            <rect width="100%" height="100%" fill="#55595c"/>
+                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Блог</text>
+                        </svg>
+
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
 </div>
 
 {% endblock %}

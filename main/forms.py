@@ -35,7 +35,7 @@ class MailingModeratorForm(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = Mailing
-        fields = ('is_activated',)
+        fields = ('title_mail', 'is_activated',)
 
 
 class MsgForm(StyleFormMixin, forms.ModelForm):
