@@ -4,7 +4,9 @@
     <h1 class="display-4">Skystore - блог</h1>
 </div>
 <div class="col-12 mb-5">
-    <a class="btn btn-outline-primary" href="{% url 'blog:create' %}">Добавить статью</a>
+    {% if perms.user.set_is_activated %}
+        <a class="btn btn-outline-primary" href="{% url 'blog:create' %}">Добавить статью</a>
+    {% endif %}
 </div>
     {% for object in object_list %}
     <div class="col-md-4">
@@ -16,11 +18,13 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
                         <a href="{% url 'blog:view' object.pk %}"
-                           class="btn btn-sm btn-outline-secondary">View</a>
-                        <a href="{% url 'blog:edit' object.pk %}"
-                           class="btn btn-sm btn-outline-secondary">Edit</a>
-                        <a href="{% url 'blog:delete' object.pk %}"
-                           class="btn btn-sm btn-outline-danger">Delete</a>
+                           class="btn btn-sm btn-outline-secondary">Посмотреть</a>
+                        {% if perms.user.set_is_activated %}
+                            <a href="{% url 'blog:edit' object.pk %}"
+                                class="btn btn-sm btn-outline-secondary">Редактировать</a>
+                            <a href="{% url 'blog:delete' object.pk %}"
+                                class="btn btn-sm btn-outline-danger">Удалить</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

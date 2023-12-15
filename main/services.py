@@ -5,31 +5,7 @@ from django.core.cache import cache
 from django.conf import settings
 from django.utils import timezone
 
-from main.models import Logfile, Client, Msg
-
-
-def get_cache_clients():
-    if settings.CACHE_ENABLED:
-        key = 'client_list'
-        client_list = cache.get(key)
-        if client_list is None:
-            client_list = Client.objects.all()
-            cache.set(key, client_list)
-    else:
-        client_list = Client.objects.all()
-    return client_list
-
-
-def get_cache_messages():
-    if settings.CACHE_ENABLED:
-        key = 'message_list'
-        message_list = cache.get(key)
-        if message_list is None:
-            message_list = Msg.objects.all()
-            cache.set(key, message_list)
-    else:
-        message_list = Msg.objects.all()
-    return message_list
+from main.models import Logfile
 
 
 def send_mailing(mailing):

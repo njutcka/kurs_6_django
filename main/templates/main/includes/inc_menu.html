@@ -2,14 +2,14 @@
 
     <nav class="ms-5">
         <a  href="{% url 'main:home' %}" class="p-2 btn btn-outline-primary" >Главная</a>
-        <a  class="p-2 btn btn-outline-primary" >Контакты</a>
         <a  href="{% url 'blog:list' %}" class="p-2 btn btn-outline-primary" >Блог</a>
 
         {% if user.is_authenticated %}
             <a href="{% url 'users:profile' %}" class="p-2 btn btn-outline-primary" >Профиль</a>
-            {% if perms.user.set_is_activated %}
+            {% if perms.user.set_is_active %}
                     <a class="p-2 btn btn-outline-primary" href="{% url 'users:user_list' %}" >Список пользователей</a>
                     <a href="{% url 'main:mailing_list' %}" class="p-2 btn btn-outline-primary" >Все рассылки</a>
+                    <a href="{% url 'main:logfile_list' %}" class="p-2 btn btn-outline-primary">Статистика рассылок</a>
             {% else %}
             <a href="{% url 'main:my_mailing' %}" class="p-2 btn btn-outline-primary" >Мои рассылки</a>
             {% endif %}

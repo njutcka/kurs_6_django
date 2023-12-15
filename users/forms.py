@@ -34,4 +34,4 @@ class UserModeratorForm(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('is_activated',)
+        fields = ('email', 'is_activated',)

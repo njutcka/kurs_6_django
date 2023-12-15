@@ -11,6 +11,7 @@ class BlogCreateView(CreateView):
     model = Blog
     fields = ('title', 'body', 'preview', 'date_of_creation', 'is_published',)
     success_url = reverse_lazy('blog:list')
+    permission_required = 'blog.set_is_activated'
 
     def form_valid(self, form):
         """Формируем динамический slug-name"""
@@ -38,6 +39,7 @@ class BlogListView(ListView):
 class BlogDetailView(DetailView):
     """Контроллер для вывода детальной информации о статье"""
     model = Blog
+    permission_required = 'blog:view'
 
     def get_object(self, queryset=None):
         """Изменение счетчика просмотра статьи"""
