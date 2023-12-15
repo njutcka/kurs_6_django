@@ -68,6 +68,8 @@ class Mailing(models.Model):
     message = models.ForeignKey(Msg, on_delete=models.CASCADE, verbose_name='Сообщение', **NULLABLE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE)
 
+    is_activated = models.BooleanField(default=True, verbose_name='действующая')
+
     def __str__(self):
         return f"{self.title_mail}"
 

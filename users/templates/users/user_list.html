@@ -1,0 +1,24 @@
+{%  extends 'main/base.html' %}
+
+{% block content %}
+
+{% for object in object_list %}
+<div class="col-5">
+    <div class="card mb-4 box-shadow">
+        <div class="card-header">
+            <h4 class="my-0 font-weight-normal">{{object.email}}</h4>
+        </div>
+        <div class="card-body">
+            <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                <li>{{object.is_activated}}</li>
+            </ul>
+                {% if perms.main.set_is_activated %}
+                    <a class="p-2 btn btn-outline-primary" href="{% url 'users:update_user' object.pk %}" >Редактировать</a>
+                {% endif %}
+
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}

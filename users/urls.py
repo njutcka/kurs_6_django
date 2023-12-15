@@ -3,7 +3,7 @@ from django.urls import path
 
 from users.apps import UsersConfig
 from users.views import RegisterView, ProfileView, VerificationTemplateView, generate_new_password, \
-    ErrorVerificationTemplateView
+    ErrorVerificationTemplateView, UsersModView, UserListView
 
 app_name = UsersConfig.name
 
@@ -16,5 +16,7 @@ urlpatterns = [
     path('verify_email/', VerificationTemplateView.as_view(), name='verify_email'),
     path('profile/genpassword/', generate_new_password, name='generate_new_password'),
     path('verify_email/error/', ErrorVerificationTemplateView.as_view(), name='verify_email_error'),
+    path('user_list', UserListView.as_view(), name='user_list'),
+    path('update_user/<int:pk>', UsersModView.as_view(), name='update_user'),
 
 ]
