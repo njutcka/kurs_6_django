@@ -1,8 +1,9 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
+from django.http import Http404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DetailView, ListView, DeleteView, TemplateView
 
-from main.forms import ClientForm, MailingForm, MsgForm
+from main.forms import ClientForm, MailingForm, MsgForm, MailingModeratorForm
 from main.models import Client, Mailing, Msg, Logfile
 
 
@@ -45,10 +46,15 @@ class ClientListView(ListView):
     template_name = 'main/client_list.html'
 
 
-class MailingCreateView(CreateView):
+class MailingCreateView(LoginRequiredMixin, CreateView):
     model = Mailing
     form_class = MailingForm
     success_url = reverse_lazy('main:mailing_list')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'request': self.request})
+        return kwargs
 
     def form_valid(self, form):
         if form.is_valid:
@@ -59,19 +65,39 @@ class MailingCreateView(CreateView):
         return super().form_valid(form)
 
 
-class MailingUpdateView(UpdateView):
+class MailingUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Mailing
     form_class = MailingForm
     success_url = reverse_lazy('main:mailing_list')
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'request': self.request})
+        return kwargs
 
-class MailingDeleteView(DeleteView):
+    def test_func(self):
+        return self.request.user == Mailing.objects.get(pk=self.kwargs['pk']).user
+
+
+class MailingUpdateModView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Mailing
-    form_class = MailingForm
+    form_class = MailingModeratorForm
+    success_url = reverse_lazy('main:mailing_list')
+    permission_required = 'main.set_is_activated'
+
+
+class MailingDeleteView(LoginRequiredMixin, DeleteView):
+    model = Mailing
     success_url = reverse_lazy('main:mailing_list')
 
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        if self.object.user != self.request.user:
+            raise Http404
+        return self.object
 
-class MailingListView(ListView):
+
+class MailingListView(LoginRequiredMixin, ListView):
     model = Mailing
     template_name = 'main/mailing_list.html'
 

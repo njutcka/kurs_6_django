@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+{% block content %}
+{% load my_tags %}
+<div class="col-12">
+    <div class="row">
+        <div class="col-6">
+            <div class="card">
+                <div class="cart-header">
+                    <h3 class="card-title">
+                        Статья "{{blog.title}}" ({{ blog.slug }})
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <img src="{{ blog.preview|mediapath }}" class="img-fluid" alt="{{ blog.title }}">
+                    <div class="col-md-8 mb-3">
+                        <p>
+                            {{ blog.body }}
+                        </p>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    Просмотры: {{ blog.views_count }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

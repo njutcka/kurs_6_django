@@ -16,8 +16,12 @@
                 <li>{{object.status_mail}}</li>
             </ul>
                     <a class="p-2 btn btn-outline-primary" href="{% url 'main:mailing_detail' object.pk %}">Детали</a>
+                {% if perms.main.set_is_activated %}
+                    <a class="p-2 btn btn-outline-primary" href="{% url 'main:update_mod_mailing' object.pk %}" >Редактировать</a>
+                {% else %}
                     <a class="p-2 btn btn-outline-primary" href="{% url 'main:update_mailing' object.pk %}">Изменить</a>
                     <a class="p-2 btn btn-outline-danger" href="{% url 'main:delete_mailing' object.pk %}">Удалить</a>
+                {% endif %}
 
         </div>
     </div>

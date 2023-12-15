@@ -1,13 +1,13 @@
 import random
 
 from django.conf import settings
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.mail import send_mail
 from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, UpdateView, TemplateView
+from django.views.generic import CreateView, UpdateView, TemplateView, ListView
 
-from users.forms import UserRegisterForm, UserProfileForm
+from users.forms import UserRegisterForm, UserProfileForm, UserModeratorForm
 from users.models import User
 
 
@@ -69,3 +69,15 @@ def generate_new_password(request):
     request.user.set_password(new_password)
     request.user.save()
     return redirect(reverse('catalog:home'))
+
+
+class UserListView(ListView):
+    model = User
+    template_name = 'users/user_list.html'
+
+
+class UsersModView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    model = User
+    form_class = UserModeratorForm
+    success_url = reverse_lazy('users:user_list')
+    permission_required = 'users.set_is_activated'
